@@ -83,14 +83,12 @@ int main() {
 
 	case 4:{
 		exit(1);
-		break;
-	}
+		break;}
 	default:{
 		cout<<"Try again.";
 		getch();
-		break;
-	}
-  }
+		break;}
+  	}
   }
   return 0;
 }
