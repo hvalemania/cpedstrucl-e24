@@ -1,8 +1,7 @@
-#include <iostream>
 #include<stdio.h> 
 #include<stdlib.h>
+#include <iostream>
 using namespace std;
-
 struct node {
 	int data;
 	struct node * next;
@@ -12,25 +11,29 @@ int count() {
   struct node * n;
   int c = 0;
   n = head;
-  while (n != NULL) {
-    n = n -> next;
-    c++;
+  while (n != NULL) 
+  {
+  	n = n -> next;
+	c++;
   }
-  return c;
+    return c;
 }
 
-void search(int val) {
+void searchcount(int x) {
   struct node * n;
-  int c = 1;
+  int c=1;
   n = head;
-  while (n != NULL) {
-  if(val == n->data)
-  	cout << "\nFound " << n->data << "at position " << c << endl;
- 	n = n-> next;
- 	c++;
-	}
-}
+  while (n != NULL) 
+  {
+ 	if (x==n->data)
+	  {
+  		printf("\nFound %d at position %d",x,c);
+ 	 }
+  	n = n -> next;
+	c++;
 
+}
+}
 void append(int num) {
   struct node * temp, * right;
   temp = (struct node * ) malloc(sizeof(struct node));
@@ -55,7 +58,6 @@ void add(int num) {
     head = temp;
   }
 }
-
 void addafter(int num, int loc) {
   int i;
   struct node * temp, * left, * right;
@@ -70,6 +72,61 @@ void addafter(int num, int loc) {
   left = temp;
   left -> next = right;
   return;
+
+}
+void aaddafter(int num, int loc) {
+  int i;
+  struct node * temp, * left, * right;
+  right = head;
+  for (i = 0; i < loc; i++) {
+    left = right;
+    right = right -> next;
+  }
+  temp = (struct node * ) malloc(sizeof(struct node));
+  temp -> data = num;
+  left -> next = temp;
+  left = temp;
+  left -> next = right;
+}
+
+void addbefore(int num, int loc) {
+  int i;
+  struct node * temp, * left, * right;
+  right = head;
+  for (i = 1; i < loc; i++) {
+    left = right;
+    right = right -> next;
+  }
+  temp = (struct node * ) malloc(sizeof(struct node));
+  temp -> data = num;
+  left -> next = temp;
+  left = temp;
+  left -> next = right;
+  
+
+}
+
+void deleall(int num) {
+  struct node * temp, * prev;
+  temp = head;
+  while (temp != NULL) {
+    if (temp -> data == num) {
+      if (temp == head) {
+        head = temp -> next;
+        free(temp);
+        
+      } else {
+        prev -> next = temp -> next;
+        free(temp);
+        temp= prev -> next;
+       
+      }
+    } else {
+      prev = temp;
+      temp = temp -> next;
+    }
+  }
+
 }
 
 int ddelete(int num) {
@@ -102,7 +159,7 @@ void insert(int num) {
     add(num);
   } else {
     while (temp != NULL) {
-    //  if (temp -> data < num)
+      //if (temp -> data < num)
         c++;
       temp = temp -> next;
     }
@@ -130,9 +187,14 @@ void display(struct node * r) {
 }
 
 int main() {
-  int i, num;
+  int i, num,x,val,loc;
   struct node * n;
   head = NULL;
+  insert(1);
+  insert(4);
+  insert(3);
+  insert(4);
+  insert(4);
   while (1) {
     printf("Linked List Operations\n");
     printf("===============\n");
@@ -140,8 +202,11 @@ int main() {
     printf("2.Display\n");
     printf("3.Size\n");
     printf("4.Delete\n");
-    printf("5.Search\n");
-    printf("6.Exit\n");
+    printf("5.Search \n");
+    printf("6.Add After\n");
+    printf("7.Add Before\n");
+    printf("8.Delete All\n");
+    printf("9.Exit\n");
     printf("Enter your choice : ");
     if (scanf("%d", & i) <= 0) {
       printf("Enter only an Integer\n");
@@ -150,7 +215,7 @@ int main() {
       switch (i) {
       case 1:
         printf("Enter the number to insert : ");
-        scanf("%d", &num);
+        scanf("%d",&num);
         insert(num);
         break;
       case 2:
@@ -163,6 +228,7 @@ int main() {
         break;
       case 3:
         printf("Size of the list is %d\n", count());
+        
         break;
       case 4:
         if (head == NULL)
@@ -177,17 +243,41 @@ int main() {
         }
         break;
       case 5:
-      	cout << "Enter number to search: ";
-      	cin >> num;
-        search(num);
-        break;
+        printf("Search number: ");
+        scanf("%d", &x);
+        searchcount(x);
+			
+      
       default:
         printf("Invalid option\n");
-      case 6:
-      	return 0;
+     case 6:
+     	printf("Value: \n");
+     	scanf("%d", &val);
+     	printf("Location: \n");
+    	scanf("%d", &loc);
+    	aaddafter(val,loc);
+    	break;
+    case 7:
+    	printf("Value: \n");
+     	scanf("%d", &val);
+     	printf("Location: \n");
+    	scanf("%d", &loc);
+    	addbefore(val,loc);
+    	break;
+     case 8:
+        
+    	if(head== NULL)
+    		cout <<"List is empty!";
+    	else
+    		cout <<"Enter the number to delete: ";
+    		cin >>val;
+    		deleall(val);
+    	break;
+	 case 9:
+        	return 0;
       }
     }
-    
+     
   }
   return 0;
 }
