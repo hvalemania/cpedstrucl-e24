@@ -1,9 +1,10 @@
 #include <iostream>
+#include<conio.h>
 using namespace std;
 
 class LinkedList{
     struct Node {
-        int x; 
+        int x;
         Node *next;
     };
 
@@ -13,75 +14,92 @@ public:
     }
 
     void addValue(int val){
-        Node *n = new Node(); 
+        Node *n = new Node();   
         n->x = val;             
-        n->next = head;         
-                               
+        n->next = head;               
         head = n;              
     }
 
     int popValue(){
         Node *n = head;
-        int ret = n->x;
-
-        head = head->next;
-        delete n;
-        return ret;
+        int ret;
+        
+		if (head==NULL){
+			return NULL;
+		}
+		else{
+			ret = n->x;
+			head = head->next;
+			delete n;
+        	return ret;
+		   }
+   		
     }
     
-    void display(){
-    	Node *n=head;
-    	while(n!=NULL){
-     		cout<<n->x<<" - ";
-    		n=n->next;   			
+    void menu(){
+    	cout<<"MAIN MENU\n";
+    	cout<<"1 - Insert into linked list\n";
+    	cout<<"2 - Pop\n";
+    	cout<<"3 - Exit\n";
+    	cout<<"4 - Display\n";
+	}
+	
+	void display(){
+		Node *n;
+		n = head;
+		if (n == NULL){
+			cout<<"\nNothing to display. Please add a value first.";
 		}
-    }
-    int mainMenu(){
-		int choice;
-		cout<<"Main menu: "<<endl
-			<<"[1] Insert into linked list"<<endl
-			<<"[2] Pop"<<endl
-			<<"[3] Exit"<<endl
-			<<"[4] Display linked list"<<endl
-			<<"Enter your choice: ";
-		cin>>choice;
-		return choice;
-    }
+		else{
+			while(n!=NULL){
+				cout<< n->x <<" ";
+				n = n->next;
+			}	
+		}
+		getch();
+	}
 
 private:
     Node *head; 
 };
 
 int main() {
-		LinkedList list; 
-		int choice,element;
-		while(1){
-			choice=list.mainMenu();
-			if(choice==1){
-				cout<<"Enter the number you want to insert: ";
-				cin>>element;
-    			list.addValue(element);	
-				cout<<"Done"<<endl;
-				system("pause>0");
-				system("cls");
-			}	
-			else if(choice==2){
-				cout<<"Pop "<<list.popValue();
-				system("pause>0");
-				system("cls");
+    LinkedList list;
+	int n, choice;
+	
+	while(1){
+		system("cls");
+		list.menu();
+		cout<<"---\nEnter choice: ";
+		cin>>choice;
+		
+		switch(choice){
+			case 1: {
+				cout<<"\nEnter Number: ";
+				cin>>n;
+				list.addValue(n);
+				break;
 			}
-			else if (choice==3)
-				exit(1);
-			else if (choice==4){
+			case 2: {
+				n = list.popValue();
+				
+				if (n==NULL){
+					cout<<"\nNothing to pop. Add value first."; 
+				}
+				else{
+					cout<<"\n"<< n <<" has been deleted.";
+				}
+
+				getch();
+				break;
+			}
+			case 3: exit(1);
+			case 4:{
 				list.display();
-				system("pause>0");
-				system("cls");
-			}	
-			else{
-				cout<<"Your choice is invalid!"<<endl;
-				system("pause>0");
-				system("cls");
+				break;
 			}
+			default: break;
 		}
+	}
     return 0;
-}  
+}
