@@ -2,9 +2,8 @@
 using namespace std;
 
 class LinkedList{
-	
     struct Node {
-        int x;
+        int x; 
         Node *next;
     };
 
@@ -14,85 +13,75 @@ public:
     }
 
     void addValue(int val){
-        Node *n = new Node();   
+        Node *n = new Node(); 
         n->x = val;             
         n->next = head;         
                                
         head = n;              
     }
 
-    int popValue()
-	{
+    int popValue(){
         Node *n = head;
         int ret = n->x;
+
         head = head->next;
-		delete n;
+        delete n;
         return ret;
     }
     
-    void displayValue()
-    {
-    	Node *j = head;
-    	Node *k = head;
-    	while(k)
-    	{
-    		j=k;
-    		cout << j-> x <<endl;
-    		k = j-> next;
+    void display(){
+    	Node *n=head;
+    	while(n!=NULL){
+     		cout<<n->x<<" - ";
+    		n=n->next;   			
 		}
-	}
-
+    }
+    int mainMenu(){
+		int choice;
+		cout<<"Main menu: "<<endl
+			<<"[1] Insert into linked list"<<endl
+			<<"[2] Pop"<<endl
+			<<"[3] Exit"<<endl
+			<<"[4] Display linked list"<<endl
+			<<"Enter your choice: ";
+		cin>>choice;
+		return choice;
+    }
 
 private:
     Node *head; 
 };
 
-void mainMenu();
-int main()
-{
-	int choice, insertNum, ctr=0;
-	LinkedList list;
-	while(1)
-	{
-		mainMenu();
-		cin>>choice;
-		switch(choice)
-		{
-			case 1:
-				cout<<"Enter a number: ";
-				cin>>insertNum;
-				list.addValue(insertNum);
-				cout<<"Value Added!"<<endl;
+int main() {
+		LinkedList list; 
+		int choice,element;
+		while(1){
+			choice=list.mainMenu();
+			if(choice==1){
+				cout<<"Enter the number you want to insert: ";
+				cin>>element;
+    			list.addValue(element);	
+				cout<<"Done"<<endl;
 				system("pause>0");
-				break;
-			case 2:	
-				cout << "deleted: " <<list.popValue();
+				system("cls");
+			}	
+			else if(choice==2){
+				cout<<"Pop "<<list.popValue();
 				system("pause>0");
-				break;
-			case 4:
-				cout <<"Display : " << endl;
-				list.displayValue();
-				system("pause >0");
-				
-			case 3:
+				system("cls");
+			}
+			else if (choice==3)
 				exit(1);
-				break;
+			else if (choice==4){
+				list.display();
+				system("pause>0");
+				system("cls");
+			}	
+			else{
+				cout<<"Your choice is invalid!"<<endl;
+				system("pause>0");
+				system("cls");
+			}
 		}
-}
-	
-}
-
-void mainMenu()
-{
-	
-	system("cls");
-	
-	int choice;
-	cout <<"[ 1 ] Insert into linked list" <<endl;
-	cout <<"[ 2 ] Pop" <<endl;
-	cout <<"[ 3 ] Exit" <<endl;
- 	cout <<"[ 4 ] Display" <<endl;
-	
-	
-	cout <<"Enter: ";
-}
+    return 0;
+}  
